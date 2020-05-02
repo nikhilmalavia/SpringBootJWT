@@ -1,7 +1,7 @@
 HELP.md
 target/**
 resources/**
-.mvn/wrapper/maven-wrapper.jar
+.mvn/**
 .DS_Store
 **/.DS_Store
 !**/src/main/**
