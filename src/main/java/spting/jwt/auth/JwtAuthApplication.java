@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import spting.jwt.auth.model.UserModel;
 import spting.jwt.auth.repo.UserRepository;
@@ -19,10 +20,15 @@ public class JwtAuthApplication {
 	@Autowired
 	private UserRepository repository;
 
+	@Autowired
+	private PasswordEncoder encoder;
+
 	@PostConstruct
 	public void initUsers() {
-		List<UserModel> users = Stream.of(new UserModel(1, "admin", "password", "admin@test.com"),
-				new UserModel(2, "user", "password", "user@test.com")).collect(Collectors.toList());
+		List<UserModel> users = Stream
+				.of(new UserModel(1, "admin", encoder.encode("password"), "admin@test.com"),
+						new UserModel(2, "user", encoder.encode("password"), "user@test.com"))
+				.collect(Collectors.toList());
 		repository.saveAll(users);
 	}
 
